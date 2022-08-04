@@ -1,18 +1,28 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { DataService } from 'src/app/services/data.service';
 @Component({
   selector: 'app-input-send-amount',
   templateUrl: './input-send-amount.component.html',
   styleUrls: ['./input-send-amount.component.css'],
+  //providers: [DataService],
 })
 export class InputSendAmountComponent implements OnInit {
-  @Output() ethAmount: EventEmitter<number> = new EventEmitter();
-
-  constructor() {}
+  constructor(private dservice: DataService) {}
 
   ngOnInit(): void {}
 
   getAmount(ethAmount: string) {
-    this.ethAmount.emit(Number(ethAmount));
+    console.log(ethAmount);
+    console.log(this.dservice.getSenderBalance());
+
+    if (Number(ethAmount) <= Number(this.dservice.getSenderBalance())) {
+      this.dservice.setEthAmount(ethAmount);
+      //console.log(`eth amount set to ${ethAmount}`);
+      var x = document.getElementById('insufficient');
+      if (x?.style.display == 'block') x.style.display = 'none';
+    } else {
+      var x = document.getElementById('insufficient');
+      if (x?.style.display == 'none') x.style.display = 'block';
+    }
   }
 }

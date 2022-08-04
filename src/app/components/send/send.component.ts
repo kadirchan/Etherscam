@@ -1,35 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ethers } from 'ethers';
-
-const Ropsten_URL =
-  'https://ropsten.infura.io/v3/5073568d7c044755a82e22f4e1081f64';
-const contractAddress = '0x1511b10671f97ced2d52324ca3c7229e6bc4a46a';
-const ABI = [
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'receiver',
-        type: 'address',
-      },
-    ],
-    name: 'SendToAddress',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-];
+import { DataService } from 'src/app/services/data.service';
 
 @Component({
   selector: 'app-send',
   templateUrl: './send.component.html',
   styleUrls: ['./send.component.css'],
+  //providers: [DataService],
 })
 export class SendComponent implements OnInit {
-  constructor() {}
+  constructor(private dservice: DataService) {}
   ngOnInit(): void {}
-  ethAmount!: number;
-  receiverAddress = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266';
+
   tx: any;
   async Send() {
     //const httpProvider = new ethers.providers.JsonRpcProvider(Ropsten_URL);
@@ -39,12 +21,27 @@ export class SendComponent implements OnInit {
       signer = provider.getSigner();
     }
 
-    const Etherscam = new ethers.Contract(contractAddress, ABI, signer);
-    const transactionResponse = await Etherscam['SendToAddress'](
-      ethers.utils.getAddress(this.receiverAddress),
-      { value: ethers.utils.parseEther('0.01') }
+    const Etherscam = new ethers.Contract(
+      this.dservice.getContractAddress(),
+      this.dservice.getABI(),
+      signer
     );
-    this.tx = transactionResponse;
-    console.log(transactionResponse);
+    const transactionResponse = await Etherscam['SendToAddress'](
+      ethers.utils.getAddress(this.dservice.getAddress()),
+      { value: ethers.utils.parseEther(this.dservice.getEthAmount()) }
+    );
+    this.tx = transactionResponse['hash'];
+    var x = document.getElementById('tx');
+    if (x?.style.display == 'none') x.style.display = 'block';
+
+    const transactionReceipt = await transactionResponse.wait(1);
+    if (x?.style.display == 'block') x.style.display = 'none';
+    const link = document.getElementById('link') as HTMLAnchorElement | null;
+    if (link !== null) {
+      link.href = 'https://ropsten.etherscan.io/tx/' + this.tx;
+      console.log(link.href);
+    }
+    x = document.getElementById('success');
+    if (x?.style.display == 'none') x.style.display = 'block';
   }
 }

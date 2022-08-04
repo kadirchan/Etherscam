@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { detectEthereumProvider } from '@metamask/detect-provider';
 import { initializeProvider } from '@metamask/providers';
-
+import { DataService } from 'src/app/services/data.service';
 import * as MetaMask from '@metamask/detect-provider';
 
 import { ethers } from 'ethers';
@@ -14,7 +14,7 @@ import { ethers } from 'ethers';
 export class ConnectWalletComponent implements OnInit {
   button_status!: string;
   balance!: string;
-  constructor() {
+  constructor(private dservice: DataService) {
     this.button_status = 'Connect';
     this.balance = '0';
   }
@@ -38,7 +38,8 @@ export class ConnectWalletComponent implements OnInit {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       let balance = await provider.getBalance(signerAddress);
       this.balance = ethers.utils.formatEther(balance);
-      console.log(this.balance);
+      this.dservice.setSenderBalance(this.balance.toString());
+      //console.log(this.balance);
     } else {
       console.log('MetaMask not installed!');
     }

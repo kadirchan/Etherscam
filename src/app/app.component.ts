@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,17 +7,4 @@ import { Component, Input } from '@angular/core';
 })
 export class AppComponent {
   title = 'Etherscam';
-  address!: string;
-  ethAmount!: number;
-
-  setEthAmount(ethAmount: number) {
-    this.ethAmount = ethAmount;
-  }
-  setReceiver(address: string) {
-    this.address = address;
-  }
-  sendTransaction() {
-    console.log(this.ethAmount);
-    console.log(this.address);
-  }
 }
