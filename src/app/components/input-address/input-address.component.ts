@@ -18,11 +18,13 @@ export class InputAddressComponent implements OnInit {
 
   getAddress(address: string) {
     if (ethers.utils.isAddress(address)) {
+      this.active_balance();
       this.requestedAddress = address;
       this.getBalance();
       this.dservice.setAddress(address);
     } else {
       console.log('Invalid address');
+      this.active_invalid();
     }
   }
   async getBalance() {
@@ -35,5 +37,17 @@ export class InputAddressComponent implements OnInit {
     } else {
       console.log('MetaMask not installed!');
     }
+  }
+  active_balance() {
+    var x = document.getElementById('receiver_balance');
+    if (x?.style.display == 'none') x.style.display = 'block';
+    x = document.getElementById('invalid');
+    if (x?.style.display == 'block') x.style.display = 'none';
+  }
+  active_invalid() {
+    var x = document.getElementById('invalid');
+    if (x?.style.display == 'none') x.style.display = 'block';
+    x = document.getElementById('receiver_balance');
+    if (x?.style.display == 'block') x.style.display = 'none';
   }
 }

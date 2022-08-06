@@ -1,9 +1,10 @@
 <p>Write receiver address</p>
 <input
-  type="text"
   #box
   (keyup.enter)="getAddress(box.value); box.value = ''"
   placeholder="Address"
+  maxlength="42"
 />
 <button type="button" (click)="getAddress(box.value)">Enter</button>
-<p>Balance : {{ balance }} ETH</p>
+<p id="receiver_balance" style="display: none">Balance : {{ balance }} ETH</p>
+<p id="invalid" style="display: none">Invalid Address</p>

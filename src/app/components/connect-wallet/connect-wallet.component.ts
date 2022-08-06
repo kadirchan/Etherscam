@@ -29,8 +29,10 @@ export class ConnectWalletComponent implements OnInit {
       this.button_status = 'Connected';
       const signerAddress = await provider.getSigner().getAddress();
       this.getBalance(signerAddress);
+      this.active_balance();
     } else {
       console.log('MetaMask not installed!');
+      this.active_metamask();
     }
   }
   async getBalance(signerAddress: string) {
@@ -43,5 +45,17 @@ export class ConnectWalletComponent implements OnInit {
     } else {
       console.log('MetaMask not installed!');
     }
+  }
+  active_balance() {
+    var x = document.getElementById('balance');
+    if (x?.style.display == 'none') x.style.display = 'block';
+    x = document.getElementById('metamask');
+    if (x?.style.display == 'block') x.style.display = 'none';
+  }
+  active_metamask() {
+    var x = document.getElementById('metamask');
+    if (x?.style.display == 'none') x.style.display = 'block';
+    x = document.getElementById('balance');
+    if (x?.style.display == 'block') x.style.display = 'none';
   }
 }

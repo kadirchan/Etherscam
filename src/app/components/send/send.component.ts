@@ -26,11 +26,14 @@ export class SendComponent implements OnInit {
       this.dservice.getABI(),
       signer
     );
+
     const transactionResponse = await Etherscam['SendToAddress'](
       ethers.utils.getAddress(this.dservice.getAddress()),
       { value: ethers.utils.parseEther(this.dservice.getEthAmount()) }
     );
+
     this.tx = transactionResponse['hash'];
+
     var x = document.getElementById('tx');
     if (x?.style.display == 'none') x.style.display = 'block';
 
