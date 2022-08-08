@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -12,8 +12,6 @@ export class DataService {
   senderBalance!: string;
 
   constructor() {
-    // this.ethAmount = '0';
-    // this.receiverAddress = '';
     this.HttpProvider =
       'https://ropsten.infura.io/v3/5073568d7c044755a82e22f4e1081f64';
     this.contractAddress = '0x1511b10671f97ced2d52324ca3c7229e6bc4a46a';

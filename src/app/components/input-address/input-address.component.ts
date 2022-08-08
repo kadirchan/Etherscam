@@ -6,7 +6,6 @@ import { DataService } from 'src/app/services/data.service';
   selector: 'app-input-address',
   templateUrl: './input-address.component.html',
   styleUrls: ['./input-address.component.css'],
-  //providers: [DataService],
 })
 export class InputAddressComponent implements OnInit {
   requestedAddress!: string;

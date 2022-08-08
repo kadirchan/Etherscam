@@ -1,14 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
+
 @Component({
   selector: 'app-input-send-amount',
   templateUrl: './input-send-amount.component.html',
   styleUrls: ['./input-send-amount.component.css'],
-  //providers: [DataService],
 })
 export class InputSendAmountComponent implements OnInit {
   constructor(private dservice: DataService) {}
-
   ngOnInit(): void {}
 
   getAmount(ethAmount: string) {
@@ -17,7 +16,6 @@ export class InputSendAmountComponent implements OnInit {
 
     if (Number(ethAmount) <= Number(this.dservice.getSenderBalance())) {
       this.dservice.setEthAmount(ethAmount);
-      //console.log(`eth amount set to ${ethAmount}`);
       var x = document.getElementById('insufficient');
       if (x?.style.display == 'block') x.style.display = 'none';
     } else {

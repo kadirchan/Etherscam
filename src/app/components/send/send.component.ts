@@ -6,7 +6,6 @@ import { DataService } from 'src/app/services/data.service';
   selector: 'app-send',
   templateUrl: './send.component.html',
   styleUrls: ['./send.component.css'],
-  //providers: [DataService],
 })
 export class SendComponent implements OnInit {
   constructor(private dservice: DataService) {}
@@ -14,7 +13,6 @@ export class SendComponent implements OnInit {
 
   tx: any;
   async Send() {
-    //const httpProvider = new ethers.providers.JsonRpcProvider(Ropsten_URL);
     var signer;
     if (typeof window.ethereum !== 'undefined') {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
